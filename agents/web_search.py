@@ -8,20 +8,21 @@ api_key = os.getenv("GOOGLE_API")
 search_engine_id = os.getenv("SEARCH_ENGINE_ID")
 
 class WebSearchAgent:
-    def __init__(self, api_key: str = None):
-        self.api_key = api_key
+    def __init__(self, api_key: str = None, search_engine_id: str = None):
+        self.api_key = api_key or os.getenv("GOOGLE_API")
+        self.search_engine_id = search_engine_id or os.getenv("SEARCH_ENGINE_ID")
         self.base_url = "https://www.googleapis.com/customsearch/v1"
         
     def search_products(self, query: str, num_results: int = 5) -> List[Dict]:
         """Search for products using Google Custom Search API"""
-        if not self.api_key or not search_engine_id:
+        if not self.api_key or not self.search_engine_id:
             print("Error: Missing API credentials")
             return []
             
         params = {
             'q': query,
             'key': self.api_key,
-            'cx': search_engine_id,
+            'cx': self.search_engine_id,
             'num': num_results
         }
         
