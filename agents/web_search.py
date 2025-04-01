@@ -14,6 +14,10 @@ class WebSearchAgent:
         
     def search_products(self, query: str, num_results: int = 5) -> List[Dict]:
         """Search for products using Google Custom Search API"""
+        if not self.api_key or not search_engine_id:
+            print("Error: Missing API credentials")
+            return []
+            
         params = {
             'q': query,
             'key': self.api_key,
@@ -23,6 +27,17 @@ class WebSearchAgent:
         
         try:
             response = requests.get(self.base_url, params=params)
+            
+            # Check for API-specific errors
+            if response.status_code == 403:
+                error_data = response.json()
+                print(f"API Error: {error_data.get('error', {}).get('message', 'Forbidden')}")
+                print("Possible causes:")
+                print("- Invalid API key or Search Engine ID")
+                print("- API not enabled in Google Cloud Console")
+                print("- Exceeded daily quota")
+                return []
+                
             response.raise_for_status()
             results = response.json().get('items', [])
             
@@ -37,8 +52,14 @@ class WebSearchAgent:
                     })
             return product_links
             
+        except requests.exceptions.RequestException as e:
+            print(f"Request failed: {str(e)}")
+            return []
+        except json.JSONDecodeError:
+            print("Error: Invalid API response format")
+            return []
         except Exception as e:
-            print(f"Error during product search: {e}")
+            print(f"Unexpected error: {str(e)}")
             return []
 
     def extract_product_details(self, url: str) -> Dict:
