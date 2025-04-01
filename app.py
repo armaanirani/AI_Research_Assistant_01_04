@@ -167,28 +167,28 @@ def main():
                     st.write("Searching for products...")
                     product_links = search_agent.search_products(query)
                     st.write(f"Found {len(product_links)} product links")
-                            
-                            products = []
-                            reviews = []
-                            
-                            for i, link in enumerate(product_links[:3]):  # Limit to 3 products
-                                st.write(f"Processing product {i+1}: {link}")
-                                product = feature_agent.get_product_features(link)
-                                if product:
-                                    st.write(f"Extracted features for product {i+1}")
-                                    product["review_summary"] = review_agent.analyze_reviews(product.get("reviews", []))
-                                    products.append(product)
-                                    reviews.extend(product.get("reviews", []))
-                            
-                            # Save and update data
-                            st.session_state.data["products"] = products
-                            st.session_state.data["reviews"] = reviews
-                            save_data(products, reviews)
-                            st.success(f"Successfully processed {len(products)} products")
-                            
-                        except Exception as e:
-                            st.error(f"Error during research: {str(e)}")
-                            st.exception(e)
+                    
+                    products = []
+                    reviews = []
+                    
+                    for i, link in enumerate(product_links[:3]):  # Limit to 3 products
+                        st.write(f"Processing product {i+1}: {link}")
+                        product = feature_agent.get_product_features(link)
+                        if product:
+                            st.write(f"Extracted features for product {i+1}")
+                            product["review_summary"] = review_agent.analyze_reviews(product.get("reviews", []))
+                            products.append(product)
+                            reviews.extend(product.get("reviews", []))
+                    
+                    # Save and update data
+                    st.session_state.data["products"] = products
+                    st.session_state.data["reviews"] = reviews
+                    save_data(products, reviews)
+                    st.success(f"Successfully processed {len(products)} products")
+                    
+                except Exception as e:
+                    st.error(f"Error during research: {str(e)}")
+                    st.exception(e)
     
     # Display results
     if st.session_state.data.get("products"):
