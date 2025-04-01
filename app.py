@@ -160,13 +160,13 @@ def main():
         query = st.text_input("Enter product to research:")
         submitted = st.form_submit_button("Search")
         
-                if submitted and query:
-                    with st.spinner("Researching products..."):
-                        try:
-                            # Execute full research pipeline
-                            st.write("Searching for products...")
-                            product_links = search_agent.search_products(query)
-                            st.write(f"Found {len(product_links)} product links")
+        if submitted and query:
+            with st.spinner("Researching products..."):
+                try:
+                    # Execute full research pipeline
+                    st.write("Searching for products...")
+                    product_links = search_agent.search_products(query)
+                    st.write(f"Found {len(product_links)} product links")
                             
                             products = []
                             reviews = []
