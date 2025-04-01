@@ -1,0 +1,7 @@
+streamlit
+langchain
+openai
+beautifulsoup4
+requests
+spacy
+python-dotenv
