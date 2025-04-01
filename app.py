@@ -10,10 +10,13 @@ from agents.web_search import WebSearchAgent
 from agents.feature_extraction import FeatureExtractionAgent
 from agents.review_analysis import ReviewAnalysisAgent
 from agents.comparative_analysis import ComparativeAnalysisAgent
+from dotenv import load_dotenv
+load_dotenv()  # Load environment variables from .env file
+
 from agents.recommendation import RecommendationAgent
 
 # Initialize agents
-search_agent = WebSearchAgent()
+search_agent = WebSearchAgent()  # Will now properly get credentials from .env
 feature_agent = FeatureExtractionAgent()
 review_agent = ReviewAnalysisAgent()
 analysis_agent = ComparativeAnalysisAgent()
