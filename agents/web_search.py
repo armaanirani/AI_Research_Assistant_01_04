@@ -2,6 +2,14 @@ import requests
 from bs4 import BeautifulSoup
 from typing import List, Dict
 import json
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
+
+api_key = os.getenv("GOOGLE_API")
+search_engine_id = 
 
 class WebSearchAgent:
     def __init__(self, api_key: str = None):
@@ -13,7 +21,7 @@ class WebSearchAgent:
         params = {
             'q': query,
             'key': self.api_key,
-            'cx': 'YOUR_SEARCH_ENGINE_ID',
+            'cx': search_engine_id,
             'num': num_results
         }
         
